@@ -58,4 +58,40 @@ public class Person {
     public void setInstruments(List<Instrument> instruments) {
         this.instruments = instruments;
     }
+
+    public String getMobile(){
+        return this.getDetails().getMobile();
+    }
+
+    public String getAltPhone(){
+        return this.getDetails().getAltPhone();
+    }
+
+    public String getEmail(){
+        return this.getDetails().getEmail();
+    }
+
+    public String getAltEmail(){
+        return this.getDetails().getAltEmail();
+    }
+
+    public String getAddressLine1(){
+        return this.getDetails().getAddress().getAddressLine1();
+    }
+
+    public String getAddressLine2(){
+        return this.getDetails().getAddress().getAddressLine2();
+    }
+
+    public String getCity(){
+        return this.getDetails().getAddress().getCity();
+    }
+
+    public String getRegion(){
+        return this.getDetails().getAddress().getRegion();
+    }
+
+    public String getPostcode(){
+        return this.getDetails().getAddress().getPostcode();
+    }
 }
