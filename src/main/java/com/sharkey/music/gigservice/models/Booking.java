@@ -1,5 +1,7 @@
 package com.sharkey.music.gigservice.models;
 
+import org.apache.tomcat.jni.Local;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -7,23 +9,25 @@ public class Booking {
 
     private Person booker;
     private LocalDate bookingDate;
-    private String message;
-    private boolean confirmed;
-    private LocalDate dateConfirmed;
     private BookingMethod bookingMethod;
-    private Payment fee;
-    private Payment cancellationFee;
-    private boolean cancelled;
-    private Payment expenses;
+    private String message;
+    private BookingStatus status;
+    private LocalDate dateConfirmed;
+    private LocalDate dateCancelled;
+    private LocalDate dateFeePaid;
+    private double fee;
+    private PaymentMethod feePaymentMethod;
+    private double expenses;
+    private LocalDate dateExpensesPaid;
+    private PaymentMethod expensesPaymentMethod;
 
-    public Booking(Person booker, LocalDate bookingDate, String message, BookingMethod bookingMethod, Payment fee) {
+    public Booking(Person booker, LocalDate bookingDate, BookingMethod bookingMethod, String message, double fee) {
         this.booker = booker;
         this.bookingDate = bookingDate;
-        this.message = message;
         this.bookingMethod = bookingMethod;
+        this.message = message;
         this.fee = fee;
-//        this.confirmed = false;
-//        this.cancelled = false;
+        this.status = BookingStatus.CONFIRMED;
     }
 
     public Person getBooker() {
@@ -42,6 +46,14 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
+    public BookingMethod getBookingMethod() {
+        return bookingMethod;
+    }
+
+    public void setBookingMethod(BookingMethod bookingMethod) {
+        this.bookingMethod = bookingMethod;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -50,12 +62,12 @@ public class Booking {
         this.message = message;
     }
 
-    public boolean isConfirmed() {
-        return confirmed;
+    public BookingStatus getStatus() {
+        return status;
     }
 
-    public void setConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
+    public void setStatus(BookingStatus status) {
+        this.status = status;
     }
 
     public LocalDate getDateConfirmed() {
@@ -66,43 +78,59 @@ public class Booking {
         this.dateConfirmed = dateConfirmed;
     }
 
-    public BookingMethod getBookingMethod() {
-        return bookingMethod;
+    public LocalDate getDateCancelled() {
+        return dateCancelled;
     }
 
-    public void setBookingMethod(BookingMethod bookingMethod) {
-        this.bookingMethod = bookingMethod;
+    public void setDateCancelled(LocalDate dateCancelled) {
+        this.dateCancelled = dateCancelled;
     }
 
-    public Payment getFee() {
+    public LocalDate getDateFeePaid() {
+        return dateFeePaid;
+    }
+
+    public void setDateFeePaid(LocalDate dateFeePaid) {
+        this.dateFeePaid = dateFeePaid;
+    }
+
+    public double getFee() {
         return fee;
     }
 
-    public void setFee(Payment fee) {
+    public void setFee(double fee) {
         this.fee = fee;
     }
 
-    public Payment getCancellationFee() {
-        return cancellationFee;
+    public PaymentMethod getFeePaymentMethod() {
+        return feePaymentMethod;
     }
 
-    public void setCancellationFee(Payment cancellationFee) {
-        this.cancellationFee = cancellationFee;
+    public void setFeePaymentMethod(PaymentMethod feePaymentMethod) {
+        this.feePaymentMethod = feePaymentMethod;
     }
 
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-
-    public Payment getExpenses() {
+    public double getExpenses() {
         return expenses;
     }
 
-    public void setExpenses(Payment expenses) {
+    public void setExpenses(double expenses) {
         this.expenses = expenses;
+    }
+
+    public LocalDate getDateExpensesPaid() {
+        return dateExpensesPaid;
+    }
+
+    public void setDateExpensesPaid(LocalDate dateExpensesPaid) {
+        this.dateExpensesPaid = dateExpensesPaid;
+    }
+
+    public PaymentMethod getExpensesPaymentMethod() {
+        return expensesPaymentMethod;
+    }
+
+    public void setExpensesPaymentMethod(PaymentMethod expensesPaymentMethod) {
+        this.expensesPaymentMethod = expensesPaymentMethod;
     }
 }

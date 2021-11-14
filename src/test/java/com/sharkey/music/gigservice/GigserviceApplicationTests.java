@@ -49,35 +49,17 @@ class GigserviceApplicationTests {
 	}
 
 	@Test
-	void canCreatePayment(){
-		Payment elvisAberdeen = new Payment(150.00, PaymentMethod.BACS);
-		assertEquals("BACS", elvisAberdeen.getPaymentMethod().toString());
-	}
-
-	@Test
-	void datePaidStartsAsNull(){
-		Payment elvisAberdeen = new Payment(150.00, PaymentMethod.BACS);
-		assertNull(elvisAberdeen.getDatePaid());
-	}
-
-	@Test
-	void paymentWaitStartsAsZero(){
-		Payment elvisAberdeen = new Payment(150.00, PaymentMethod.BACS);
-		assertEquals(0, elvisAberdeen.getPaymentWaitInDays());
-	}
-
-	@Test
 	void canCreateBooking(){
 		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
 		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
 		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		Payment euanGig = new Payment(180.00, PaymentMethod.BACS);
 		String message = "Hi Andy, are you free for a gig on 25th December 1-5pm at Gelneagles, fee £280?";
 
-		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), message, BookingMethod.TEXT, euanGig);
+		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), BookingMethod.TEXT, message, 180);
 		assertEquals("Euan", fakeBooking.getBooker().getFirstName());
 		assertEquals(13, fakeBooking.getBookingDate().getDayOfMonth());
-		assertEquals(180.00, fakeBooking.getFee().getAmount());
+		assertEquals(180.00, fakeBooking.getFee());
+		assertEquals("TEXT", fakeBooking.getBookingMethod().toString());
 	}
 
 	@Test
@@ -85,15 +67,29 @@ class GigserviceApplicationTests {
 		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
 		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
 		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		Payment euanGig = new Payment(180.00, PaymentMethod.BACS);
 		String message = "Hi Andy, are you free for a gig on 25th December 1-5pm at Gelneagles, fee £280?";
 
-		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), message, BookingMethod.TEXT, euanGig);
-		assertFalse(fakeBooking.isCancelled());
-		assertFalse(fakeBooking.isConfirmed());
-		assertNull(fakeBooking.getDateConfirmed());
-		assertNull(fakeBooking.getExpenses());
+		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), BookingMethod.TEXT, message, 180);
 
+		assertEquals("CONFIRMED", fakeBooking.getStatus().toString());
+		assertNull(fakeBooking.getDateConfirmed());
+		assertNull(fakeBooking.getDateCancelled());
+		assertEquals(0, fakeBooking.getExpenses());
 	}
+
+	@Test
+	void canCreateVenue(){
+		Address venueAddress =  new Address("Guild Street", "","Aberdeen", "", "AB1 1AA","U.K.");
+		Venue tivoli = new Venue("Tivoli Theatre", venueAddress, VenueType.SMALL_THEATRE);
+		assertEquals("Tivoli Theatre", tivoli.getName());
+		assertEquals("AB1 1AA", tivoli.getAddress().getPostcode());
+	}
+
+	@Test
+	void canCreateAct(){
+		Act absoluteElvis = new Act("Absolute Elvis", true, DressCode.ALL_BLACK);
+		assertTrue(absoluteElvis.getPrepRequired());
+	}
+
 
 }

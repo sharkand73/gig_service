@@ -43,7 +43,7 @@ public class Act {
         this.skillsRequired = skillsRequired;
     }
 
-    public boolean isPrepRequired() {
+    public boolean getPrepRequired() {
         return prepRequired;
     }
 
