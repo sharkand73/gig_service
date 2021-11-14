@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,9 +87,27 @@ class GigserviceApplicationTests {
 	}
 
 	@Test
-	void canCreateAct(){
+	void canCreateAct() {
 		Act absoluteElvis = new Act("Absolute Elvis", true, DressCode.ALL_BLACK);
 		assertTrue(absoluteElvis.getPrepRequired());
+	}
+
+	@Test
+	void canCreateGig(){
+		Address jonAddress = new Address("1 Fake Street", "Tullibody","Alloa", "", "FK1 1AA","U.K.");
+		Details jonDetails = new Details(jonAddress, "07777 123456", "", "jfleming@gmail.com", "");
+		Person jon = new Person("Jon", "Fleming", jonDetails, null);
+		String message = "Hi Andy, are you free for a gig on 12th November 7:30-10pm in Aberdeen, fee £150?";
+		Address venueAddress =  new Address("Guild Street", "","Aberdeen", "", "AB1 1AA","U.K.");
+		Venue tivoli = new Venue("Tivoli Theatre", venueAddress, VenueType.SMALL_THEATRE);
+		Booking elvisBooking = new Booking(jon, LocalDate.of(2021,07, 01), BookingMethod.MESSENGER, message, 150);
+		Act absoluteElvis = new Act("Absolute Elvis", true, DressCode.ALL_BLACK);
+		LocalDateTime arrive = LocalDateTime.of(2021,11,12,16,0,0);
+		LocalDateTime start = LocalDateTime.of(2021,11,12,19,30,0);
+		LocalDateTime end = LocalDateTime.of(2021,11,12,22,10,0);
+
+		Gig aberdeen = new Gig(elvisBooking, absoluteElvis, arrive, start, end, 120, tivoli, DressCode.ALL_BLACK, true, true);
+		assertEquals("Aberdeen", aberdeen.getVenue().getAddress().getCity());
 	}
 
 
