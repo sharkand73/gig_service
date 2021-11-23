@@ -1,11 +1,33 @@
 package com.sharkey.music.gigservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "details")
 public class Details {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @JsonIgnoreProperties("details")
+    @OneToOne  // CascadeType.ALL causing issues.  Why?
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @OneToOne(mappedBy = "details")
+    private Person person;
+
+    @Column
     private String mobile;
+    @Column(name = "alt_phone")
     private String altPhone;
+    @Column
     private String email;
+    @Column(name = "alt_email")
     private String altEmail;
 
     public Details(Address address, String mobile, String altPhone, String email, String altEmail){
@@ -14,6 +36,17 @@ public class Details {
         this.altPhone = altPhone;
         this.email = email;
         this.altEmail = altEmail;
+    }
+
+    public Details() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Address getAddress() {
@@ -54,5 +87,13 @@ public class Details {
 
     public void setAltEmail(String altEmail) {
         this.altEmail = altEmail;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

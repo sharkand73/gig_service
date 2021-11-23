@@ -1,25 +1,55 @@
 package com.sharkey.music.gigservice.models;
 
-import org.apache.tomcat.jni.Local;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sharkey.music.gigservice.models.enums.BookingMethod;
+import com.sharkey.music.gigservice.models.enums.BookingStatus;
+import com.sharkey.music.gigservice.models.enums.PaymentMethod;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@Entity
+@Table(name="booking")
 public class Booking {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @JsonIgnoreProperties("bookings")
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person booker;
+
+    @Column
     private LocalDate bookingDate;
+
+    @Column
     private BookingMethod bookingMethod;
+    @Column
     private String message;
+    @Column
     private BookingStatus status;
+    @Column
     private LocalDate dateConfirmed;
+    @Column
     private LocalDate dateCancelled;
+    @Column
     private LocalDate dateFeePaid;
+    @Column
     private double fee;
+    @Column
     private PaymentMethod feePaymentMethod;
+    @Column
     private double expenses;
+    @Column
     private LocalDate dateExpensesPaid;
+    @Column
     private PaymentMethod expensesPaymentMethod;
+
+    @JsonIgnoreProperties("booking")
+    @OneToOne(mappedBy = "booking")
+    private Gig gig;
 
     public Booking(Person booker, LocalDate bookingDate, BookingMethod bookingMethod, String message, double fee) {
         this.booker = booker;
@@ -28,6 +58,9 @@ public class Booking {
         this.message = message;
         this.fee = fee;
         this.status = BookingStatus.CONFIRMED;
+    }
+
+    public Booking() {
     }
 
     public Person getBooker() {

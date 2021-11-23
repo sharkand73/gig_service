@@ -1,15 +1,53 @@
 package com.sharkey.music.gigservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "person")
 public class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+
+    @JsonIgnoreProperties("person")
+    @OneToOne
+    @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
+
+    @ManyToOne
+    @JoinColumn(name = "organisation_id", referencedColumnName = "id")
     private Organisation organisation;
+
+    @JsonIgnoreProperties("persons")
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "person_instrument",
+            joinColumns = {
+                    @JoinColumn(name = "person_id", nullable = false, updatable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "instrument_id", nullable = false, updatable = false)
+            }
+    )
     private List<Instrument> instruments;
+
+    @JsonIgnoreProperties("booker")
+    @OneToMany(mappedBy = "booker", fetch = FetchType.LAZY)
+    private List<Booking> bookings;
 
     public Person(String firstName, String lastName, Details details, Organisation organisation){
         this.firstName = firstName;
@@ -19,8 +57,19 @@ public class Person {
         this.instruments = new ArrayList<>();
     }
 
+    public Person() {
+    }
+
     public String getFirstName() {
         return firstName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {
@@ -59,39 +108,42 @@ public class Person {
         this.instruments = instruments;
     }
 
-    public String getMobile(){
+    public String findMobile(){
         return this.getDetails().getMobile();
     }
 
-    public String getAltPhone(){
+    public String findAltPhone(){
         return this.getDetails().getAltPhone();
     }
 
-    public String getEmail(){
+    public String findEmail(){
         return this.getDetails().getEmail();
     }
 
-    public String getAltEmail(){
+    public String findAltEmail(){
         return this.getDetails().getAltEmail();
     }
 
-    public String getAddressLine1(){
+    public String findAddressLine1(){
         return this.getDetails().getAddress().getAddressLine1();
     }
 
-    public String getAddressLine2(){
+    public String findddressLine2(){
         return this.getDetails().getAddress().getAddressLine2();
     }
 
-    public String getCity(){
+    public String findCity(){
         return this.getDetails().getAddress().getCity();
     }
 
-    public String getRegion(){
+    public String findRegion(){
         return this.getDetails().getAddress().getRegion();
     }
 
-    public String getPostcode(){
+    public String findPostcode(){
         return this.getDetails().getAddress().getPostcode();
+    }
+    public void addInstrument(Instrument instrument){
+        this.instruments.add(instrument);
     }
 }

@@ -1,20 +1,45 @@
 package com.sharkey.music.gigservice.models;
 
-import com.sharkey.music.gigservice.models.Address;
-import com.sharkey.music.gigservice.models.VenueType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sharkey.music.gigservice.models.enums.VenueType;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name="venue")
 public class Venue {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private String name;
+
+    @JsonIgnoreProperties("venues")
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @Column
     private String coordinates;
+
+    @Column
     private VenueType venueType;
+
+    @JsonIgnoreProperties("venue")
+    @OneToMany(mappedBy = "venue", fetch = FetchType.LAZY)
+    private List<Gig> gigs;
+
 
     public Venue(String name, Address address, VenueType venueType){
         this.name = name;
         this.address = address;
         this.venueType = venueType;
-        this.coordinates = "";
+    }
+
+    public Venue() {
     }
 
     public String getName() {
@@ -47,5 +72,13 @@ public class Venue {
 
     public void setVenueType(VenueType venueType) {
         this.venueType = venueType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

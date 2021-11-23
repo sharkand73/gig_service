@@ -1,20 +1,51 @@
 package com.sharkey.music.gigservice.models;
 
-import org.apache.tomcat.jni.Local;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sharkey.music.gigservice.models.enums.DressCode;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "gig")
 public class Gig {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+
+    @JsonIgnoreProperties("gigs")
+    @OneToOne
+    @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
+
+    @JsonIgnoreProperties("gigs")
+    @ManyToOne
+    @JoinColumn(name = "act_id", referencedColumnName = "id")
     private Act act;
+
+    @Column
     private LocalDateTime arrivalTime;
+    @Column
     private LocalDateTime startTime;
+    @Column
     private LocalDateTime endTime;
+    @Column
     private int playingTime;
+
+    @JsonIgnoreProperties("gigs")
+    @ManyToOne
+    @JoinColumn(name = "venue_id", referencedColumnName = "id")
     private Venue venue;
+
+    @Column
     private DressCode dressCode;
+
+    @Column
     private boolean soundCheck;
+
+    @Column
     private boolean foodProvided;
 
     public Gig(Booking booking, Act act, LocalDateTime arrivalTime, LocalDateTime startTime, LocalDateTime endTime, int playingTime, Venue venue, DressCode dressCode, boolean soundCheck, boolean foodProvided) {
@@ -28,6 +59,17 @@ public class Gig {
         this.dressCode = dressCode;
         this.soundCheck = soundCheck;
         this.foodProvided = foodProvided;
+    }
+
+    public Gig() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Booking getBooking() {

@@ -1,4 +1,4 @@
-package com.sharkey.music.gigservice.models;
+package com.sharkey.music.gigservice.models.enums;
 
 public enum VenueType {
     LARGE_THEATRE,
@@ -7,5 +7,5 @@ public enum VenueType {
     PUB,
     JAZZ_CLUB,
     HOTEL_RESTAURANT,
-    OTHER;
+    OTHER
 }

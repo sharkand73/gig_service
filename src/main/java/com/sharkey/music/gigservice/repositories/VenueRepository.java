@@ -1,0 +1,7 @@
+package com.sharkey.music.gigservice.repositories;
+
+import com.sharkey.music.gigservice.models.Venue;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VenueRepository extends JpaRepository<Venue, Long> {
+}

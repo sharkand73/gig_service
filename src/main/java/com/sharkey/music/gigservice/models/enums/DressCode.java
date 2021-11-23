@@ -1,4 +1,4 @@
-package com.sharkey.music.gigservice.models;
+package com.sharkey.music.gigservice.models.enums;
 
 public enum DressCode {
     BLACK_TIE,
@@ -9,5 +9,5 @@ public enum DressCode {
     SUIT,
     VINTAGE,
     CASUAL,
-    FANCY_DRESS;
+    FANCY_DRESS
 }

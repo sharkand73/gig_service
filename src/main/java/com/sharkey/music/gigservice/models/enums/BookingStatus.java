@@ -1,9 +1,9 @@
-package com.sharkey.music.gigservice.models;
+package com.sharkey.music.gigservice.models.enums;
 
 public enum BookingStatus {
 
     UNCONFIRMED,
     CONFIRMED,
     CANCELLED,
-    CLOSED;
+    CLOSED
 }

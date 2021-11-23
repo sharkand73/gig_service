@@ -1,6 +1,9 @@
 package com.sharkey.music.gigservice;
 
 import com.sharkey.music.gigservice.models.*;
+import com.sharkey.music.gigservice.models.enums.BookingMethod;
+import com.sharkey.music.gigservice.models.enums.DressCode;
+import com.sharkey.music.gigservice.models.enums.VenueType;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -45,8 +48,8 @@ class GigserviceApplicationTests {
 		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
 		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
 		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		assertEquals("07985 001812", euan.getMobile());
-		assertEquals("G41 2AG", euan.getPostcode());
+		assertEquals("07985 001812", euan.findMobile());
+		assertEquals("G41 2AG", euan.findPostcode());
 	}
 
 	@Test
