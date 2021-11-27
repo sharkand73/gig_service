@@ -16,7 +16,7 @@ public class Gig {
     private Long id;
 
     @JsonIgnoreProperties("gigs")
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
 
@@ -40,6 +40,9 @@ public class Gig {
     private Venue venue;
 
     @Column
+    private boolean isRehearsal;
+
+    @Column
     private DressCode dressCode;
 
     @Column
@@ -48,7 +51,13 @@ public class Gig {
     @Column
     private boolean foodProvided;
 
-    public Gig(Booking booking, Act act, LocalDateTime arrivalTime, LocalDateTime startTime, LocalDateTime endTime, int playingTime, Venue venue, DressCode dressCode, boolean soundCheck, boolean foodProvided) {
+    @Column
+    private int distanceDriven;
+
+    @Column
+    private double moneySpent;
+
+    public Gig(Booking booking, Act act, LocalDateTime arrivalTime, LocalDateTime startTime, LocalDateTime endTime, int playingTime, Venue venue, boolean isRehearsal, DressCode dressCode, boolean soundCheck, boolean foodProvided) {
         this.booking = booking;
         this.act = act;
         this.arrivalTime = arrivalTime;
@@ -56,9 +65,12 @@ public class Gig {
         this.endTime = endTime;
         this.playingTime = playingTime;
         this.venue = venue;
+        this.isRehearsal = isRehearsal;
         this.dressCode = dressCode;
         this.soundCheck = soundCheck;
         this.foodProvided = foodProvided;
+        this.moneySpent = moneySpent;
+        this.distanceDriven = distanceDriven;
     }
 
     public Gig() {
@@ -128,6 +140,14 @@ public class Gig {
         this.venue = venue;
     }
 
+    public boolean isRehearsal() {
+        return isRehearsal;
+    }
+
+    public void setRehearsal(boolean rehearsal) {
+        isRehearsal = rehearsal;
+    }
+
     public DressCode getDressCode() {
         return dressCode;
     }
@@ -150,5 +170,21 @@ public class Gig {
 
     public void setFoodProvided(boolean foodProvided) {
         this.foodProvided = foodProvided;
+    }
+
+    public int getDistanceDriven() {
+        return distanceDriven;
+    }
+
+    public void setDistanceDriven(int distanceDriven) {
+        this.distanceDriven = distanceDriven;
+    }
+
+    public double getMoneySpent() {
+        return moneySpent;
+    }
+
+    public void setMoneySpent(double moneySpent) {
+        this.moneySpent = moneySpent;
     }
 }

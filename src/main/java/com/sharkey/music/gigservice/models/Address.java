@@ -1,5 +1,7 @@
 package com.sharkey.music.gigservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,12 +13,15 @@ public class Address {
     @Column
     private Long id;
 
+    @JsonIgnoreProperties("address")
     @OneToOne(mappedBy = "address")
     private Details details;
 
+    @JsonIgnoreProperties("address")
     @OneToOne(mappedBy = "address")
     private Organisation organisation;
 
+    @JsonIgnoreProperties("address")
     @OneToOne(mappedBy = "address")
     private Venue venue;
 

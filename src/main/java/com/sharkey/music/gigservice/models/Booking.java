@@ -7,6 +7,7 @@ import com.sharkey.music.gigservice.models.enums.PaymentMethod;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="booking")
@@ -48,8 +49,8 @@ public class Booking {
     private PaymentMethod expensesPaymentMethod;
 
     @JsonIgnoreProperties("booking")
-    @OneToOne(mappedBy = "booking")
-    private Gig gig;
+    @OneToMany(mappedBy = "booking")
+    private List<Gig> gigs;
 
     public Booking(Person booker, LocalDate bookingDate, BookingMethod bookingMethod, String message, double fee) {
         this.booker = booker;
@@ -165,5 +166,21 @@ public class Booking {
 
     public void setExpensesPaymentMethod(PaymentMethod expensesPaymentMethod) {
         this.expensesPaymentMethod = expensesPaymentMethod;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Gig> getGigs() {
+        return gigs;
+    }
+
+    public void setGigs(List<Gig> gigs) {
+        this.gigs = gigs;
     }
 }

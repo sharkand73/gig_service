@@ -27,6 +27,7 @@ public class Person {
     @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
 
+    @JsonIgnoreProperties("persons")
     @ManyToOne
     @JoinColumn(name = "organisation_id", referencedColumnName = "id")
     private Organisation organisation;

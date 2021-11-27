@@ -109,7 +109,7 @@ class GigserviceApplicationTests {
 		LocalDateTime start = LocalDateTime.of(2021,11,12,19,30,0);
 		LocalDateTime end = LocalDateTime.of(2021,11,12,22,10,0);
 
-		Gig aberdeen = new Gig(elvisBooking, absoluteElvis, arrive, start, end, 120, tivoli, DressCode.ALL_BLACK, true, true);
+		Gig aberdeen = new Gig(elvisBooking, absoluteElvis, arrive, start, end, 120, tivoli, false, DressCode.ALL_BLACK, true, true);
 		assertEquals("Aberdeen", aberdeen.getVenue().getAddress().getCity());
 	}
 

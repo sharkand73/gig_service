@@ -121,4 +121,34 @@ public class Act {
     public boolean isPrepRequired() {
         return prepRequired;
     }
+
+    public List<Gig> getGigs() {
+        return gigs;
+    }
+
+    public void setGigs(List<Gig> gigs) {
+        this.gigs = gigs;
+    }
+
+    public void addStyle(Style style) {
+        if (!this.styles.contains(style))
+        this.styles.add(style);
+    }
+
+    public void removeStyle(Style style) {
+        if (this.styles.contains(style)){
+            this.styles.remove(style);
+        }
+    }
+
+    public void addSkill(Skill skill) {
+        if (!this.skillsRequired.contains(skill))
+            this.skillsRequired.add(skill);
+    }
+
+    public void removeSkill(Skill skill) {
+        if (this.skillsRequired.contains(skill)){
+            this.skillsRequired.remove(skill);
+        }
+    }
 }
