@@ -140,11 +140,11 @@ public class Gig {
         this.venue = venue;
     }
 
-    public boolean isRehearsal() {
+    public boolean getIsRehearsal() {
         return isRehearsal;
     }
 
-    public void setRehearsal(boolean rehearsal) {
+    public void setIsRehearsal(boolean rehearsal) {
         isRehearsal = rehearsal;
     }
 
@@ -156,7 +156,7 @@ public class Gig {
         this.dressCode = dressCode;
     }
 
-    public boolean isSoundCheck() {
+    public boolean getSoundCheck() {
         return soundCheck;
     }
 
@@ -164,7 +164,7 @@ public class Gig {
         this.soundCheck = soundCheck;
     }
 
-    public boolean isFoodProvided() {
+    public boolean getFoodProvided() {
         return foodProvided;
     }
 
@@ -187,4 +187,5 @@ public class Gig {
     public void setMoneySpent(double moneySpent) {
         this.moneySpent = moneySpent;
     }
+
 }

@@ -21,7 +21,7 @@ public class Address {
     @OneToOne(mappedBy = "address")
     private Organisation organisation;
 
-    @JsonIgnoreProperties("address")
+    @JsonIgnoreProperties({"address", "gigs"})
     @OneToOne(mappedBy = "address")
     private Venue venue;
 

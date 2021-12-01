@@ -17,7 +17,7 @@ public class Venue {
     @Column
     private String name;
 
-    @JsonIgnoreProperties("venues")
+    @JsonIgnoreProperties("venue")
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
@@ -72,6 +72,14 @@ public class Venue {
 
     public void setVenueType(VenueType venueType) {
         this.venueType = venueType;
+    }
+
+    public List<Gig> getGigs() {
+        return gigs;
+    }
+
+    public void setGigs(List<Gig> gigs) {
+        this.gigs = gigs;
     }
 
     public Long getId() {

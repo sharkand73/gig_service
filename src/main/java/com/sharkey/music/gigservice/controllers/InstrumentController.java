@@ -1,12 +1,11 @@
 package com.sharkey.music.gigservice.controllers;
 
 import com.sharkey.music.gigservice.models.Instrument;
-import com.sharkey.music.gigservice.models.Style;
 import com.sharkey.music.gigservice.repositories.InstrumentRepository;
-import com.sharkey.music.gigservice.repositories.StyleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,5 +15,31 @@ public class InstrumentController {
     InstrumentRepository instrumentRepository;
 
     @GetMapping(value = "/instruments")
-    public List<Instrument> getAllStyles() {return instrumentRepository.findAll();}
+    public List<Instrument> getAllInstruments() {return instrumentRepository.findAll();}
+
+    @GetMapping(value = "/instruments/{id}")
+    public ResponseEntity<Instrument> getInstrument(@PathVariable Long id){
+        return new ResponseEntity(instrumentRepository.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/instruments")
+    public ResponseEntity<Instrument> postInstrument(@RequestBody Instrument instrument){
+        instrumentRepository.save(instrument);
+        return new ResponseEntity<>(instrument, HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping(value = "/instruments/{id}")
+    public ResponseEntity<Long> deleteInstrument(@PathVariable Long id){
+        instrumentRepository.deleteById(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/instruments/{id}")
+    public ResponseEntity<Instrument> putInstrument(@RequestBody Instrument instrument, @PathVariable Long id){
+        Instrument foundInstrument = instrumentRepository.findById(id).get();
+        foundInstrument.setName(instrument.getName());
+        instrumentRepository.save(foundInstrument);
+        return new ResponseEntity<>(foundInstrument, HttpStatus.OK);
+    }
+
 }
