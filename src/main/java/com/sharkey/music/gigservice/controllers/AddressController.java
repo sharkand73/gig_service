@@ -17,6 +17,14 @@ public class AddressController {
     @GetMapping(value = "/addresses")
     public List<Address> getAllAddresss() {return addressRepository.findAll();}
 
+    @PostMapping(value = "/addresses/batch")
+    public ResponseEntity<List<Address>> postAddresses(@RequestBody List<Address> addresses){
+        for(Address address : addresses) {
+            addressRepository.save(address);
+        }
+        return new ResponseEntity<>(addresses, HttpStatus.ACCEPTED);
+    }
+
     @GetMapping(value = "/addresses/{id}")
     public ResponseEntity<Address> getAddress(@PathVariable Long id){
         return new ResponseEntity(addressRepository.findById(id), HttpStatus.OK);
@@ -46,4 +54,6 @@ public class AddressController {
         addressRepository.save(foundAddress);
         return new ResponseEntity<>(foundAddress, HttpStatus.OK);
     }
+
+
 }

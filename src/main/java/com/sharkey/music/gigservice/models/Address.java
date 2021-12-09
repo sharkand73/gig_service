@@ -13,7 +13,7 @@ public class Address {
     @Column
     private Long id;
 
-    @JsonIgnoreProperties("address")
+    @JsonIgnoreProperties(value = {"address", "person"}, allowSetters = true)
     @OneToOne(mappedBy = "address")
     private Details details;
 
@@ -57,22 +57,6 @@ public class Address {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Details getDetails() {
-        return details;
-    }
-
-    public void setDetails(Details details) {
-        this.details = details;
-    }
-
-    public Venue getVenue() {
-        return venue;
-    }
-
-    public void setVenue(Venue venue) {
-        this.venue = venue;
     }
 
     public String getAddressLine1() {
@@ -129,6 +113,22 @@ public class Address {
 
     public void setOrganisation(Organisation organisation) {
         this.organisation = organisation;
+    }
+
+    public Details getDetails() {
+        return details;
+    }
+
+    public void setDetails(Details details) {
+        this.details = details;
+    }
+
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(Venue venue) {
+        this.venue = venue;
     }
 
 

@@ -1,5 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
+import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.models.Details;
 import com.sharkey.music.gigservice.repositories.DetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,14 @@ public class DetailsController {
     @PostMapping(value = "/details")
     public ResponseEntity<Details> postDetails(@RequestBody Details details){
         detailsRepository.save(details);
+        return new ResponseEntity<>(details, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/details/batch")
+    public ResponseEntity<List<Details>> postDetails(@RequestBody List<Details> details){
+        for(Details detailsItem : details) {
+            detailsRepository.save(detailsItem);
+        }
         return new ResponseEntity<>(details, HttpStatus.ACCEPTED);
     }
 

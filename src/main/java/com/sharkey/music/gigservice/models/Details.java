@@ -13,7 +13,7 @@ public class Details {
     @Column
     private Long id;
 
-    @JsonIgnoreProperties("details")
+    @JsonIgnoreProperties(value = {"details", "venue"}, allowSetters = true)
     @OneToOne  // CascadeType.ALL causing issues.  Why?
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
