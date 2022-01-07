@@ -17,13 +17,16 @@ public class Venue {
     @Column
     private String name;
 
-    @JsonIgnoreProperties("venue")
+    @JsonIgnoreProperties(value = {"venue", "details"}, allowSetters = true)
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
     @Column
-    private String coordinates;
+    private double coordinatesN;
+
+    @Column
+    private double coordinatesW;
 
     @Column
     private VenueType venueType;
@@ -58,12 +61,20 @@ public class Venue {
         this.address = address;
     }
 
-    public String getCoordinates() {
-        return coordinates;
+    public double getCoordinatesN() {
+        return coordinatesN;
     }
 
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
+    public void setCoordinatesN(double coordinatesN) {
+        this.coordinatesN = coordinatesN;
+    }
+
+    public double getCoordinatesW() {
+        return coordinatesW;
+    }
+
+    public void setCoordinatesW(double coordinatesW) {
+        this.coordinatesW = coordinatesW;
     }
 
     public VenueType getVenueType() {

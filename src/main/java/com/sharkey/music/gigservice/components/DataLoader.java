@@ -106,70 +106,70 @@ public class DataLoader implements ApplicationRunner {
 
 
 
-        Address euanAddress = new Address("36 Regent Park Square", "Strathbungo", "Glasgow", "", "G41 2AG", "U.K.");
-        addressRepository.save(euanAddress);
-        Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-        detailsRepository.save(euanDetails);
-        Instrument euanPiano = new Instrument(InstrumentName.PIANO);
-        instrumentRepository.save(euanPiano);
-        Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-        euan.addInstrument(euanPiano);
-        personRepository.save(euan);
-
-        Address rsnoAddress = new Address("19 Killermont Street", "", "Glasgow", "", "G2 3NX", "U.K.");
-        addressRepository.save(rsnoAddress);
-        Organisation rsno = new Organisation("The R.S.N.O.", rsnoAddress);
-        organisationRepository.save(rsno);
-        Person emmaH = new Person("Emma", "Hunter", null, rsno);
-        personRepository.save(emmaH);
-
-        Booking rsnoBooking = new Booking(emmaH, LocalDate.of(2021,11,24), BookingMethod.EMAIL, "", 350);
-        rsnoBooking.setStatus(BookingStatus.UNCONFIRMED);
-        bookingRepository.save(rsnoBooking);
-
-        Act rsnoAct = new Act("The R.S.N.O.", false, DressCode.WHITE_JACKET);
-        rsnoAct.addStyle(westEnd);
-        rsnoAct.addStyle(pop);
-        rsnoAct.addSkill(reading);
-        actRepository.save(rsnoAct);
-
-
-        Address grchAddress = new Address("2 Sauchiehall Street", "", "Glasgow", "", "G2 3NY", "U.K.");
-        Address usherAddress = new Address("Lothian Road", "", "Edinburgh", "", "EH1 2EA", "U.K.");
-        addressRepository.save(grchAddress);
-        addressRepository.save(usherAddress);
-
-        Venue rsnoCentre = new Venue("The R.S.N.O. Centre", rsnoAddress, VenueType.OTHER);
-        venueRepository.save(rsnoCentre);
-        Venue grch = new Venue("Glasgow Royal Concert Hall", grchAddress, VenueType.CONCERT_HALL);
-        venueRepository.save(grch);
-        Venue usherHall = new Venue("Usher Hall", usherAddress, VenueType.CONCERT_HALL);
-        venueRepository.save(usherHall);
-
-        Gig rsnoGig1 = new Gig(rsnoBooking,
-                                rsnoAct,
-                                LocalDateTime.of(2021,12, 1, 9, 30, 0),
-                                LocalDateTime.of(2021,12, 1, 10, 00, 0),
-                                LocalDateTime.of(2021,12, 1, 13, 00, 0),
-                                180, rsnoCentre, true, DressCode.CASUAL, false, false);
-
-        Gig rsnoGig2 = new Gig(rsnoBooking,
-                rsnoAct,
-                LocalDateTime.of(2021,12, 4, 10, 00, 0),
-                LocalDateTime.of(2021,12, 4, 10, 30, 0),
-                LocalDateTime.of(2021,12, 4, 16, 30, 0),
-                240, grch, false, DressCode.WHITE_JACKET, true, false);
-
-        Gig rsnoGig3 = new Gig(rsnoBooking,
-                rsnoAct,
-                LocalDateTime.of(2021,12, 5, 10, 00, 0),
-                LocalDateTime.of(2021,12, 5, 10, 30, 0),
-                LocalDateTime.of(2021,12, 5, 16, 30, 0),
-                240, usherHall, false, DressCode.WHITE_JACKET, true, false);
-
-        gigRepository.save(rsnoGig1);
-        gigRepository.save(rsnoGig2);
-        gigRepository.save(rsnoGig3);
+//        Address euanAddress = new Address("36 Regent Park Square", "Strathbungo", "Glasgow", "", "G41 2AG", "U.K.");
+//        addressRepository.save(euanAddress);
+//        Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
+//        detailsRepository.save(euanDetails);
+//        Instrument euanPiano = new Instrument(InstrumentName.PIANO);
+//        instrumentRepository.save(euanPiano);
+//        Person euan = new Person("Euan", "Stevenson", euanDetails, null);
+//        euan.addInstrument(euanPiano);
+//        personRepository.save(euan);
+//
+//        Address rsnoAddress = new Address("19 Killermont Street", "", "Glasgow", "", "G2 3NX", "U.K.");
+//        addressRepository.save(rsnoAddress);
+//        Organisation rsno = new Organisation("The R.S.N.O.", rsnoAddress);
+//        organisationRepository.save(rsno);
+//        Person emmaH = new Person("Emma", "Hunter", null, rsno);
+//        personRepository.save(emmaH);
+//
+//        Booking rsnoBooking = new Booking(emmaH, LocalDate.of(2021,11,24), BookingMethod.EMAIL, "", 350);
+//        rsnoBooking.setStatus(BookingStatus.UNCONFIRMED);
+//        bookingRepository.save(rsnoBooking);
+//
+//        Act rsnoAct = new Act("The R.S.N.O.", false, DressCode.WHITE_JACKET);
+//        rsnoAct.addStyle(westEnd);
+//        rsnoAct.addStyle(pop);
+//        rsnoAct.addSkill(reading);
+//        actRepository.save(rsnoAct);
+//
+//
+//        Address grchAddress = new Address("2 Sauchiehall Street", "", "Glasgow", "", "G2 3NY", "U.K.");
+//        Address usherAddress = new Address("Lothian Road", "", "Edinburgh", "", "EH1 2EA", "U.K.");
+//        addressRepository.save(grchAddress);
+//        addressRepository.save(usherAddress);
+//
+//        Venue rsnoCentre = new Venue("The R.S.N.O. Centre", rsnoAddress, VenueType.OTHER);
+//        venueRepository.save(rsnoCentre);
+//        Venue grch = new Venue("Glasgow Royal Concert Hall", grchAddress, VenueType.CONCERT_HALL);
+//        venueRepository.save(grch);
+//        Venue usherHall = new Venue("Usher Hall", usherAddress, VenueType.CONCERT_HALL);
+//        venueRepository.save(usherHall);
+//
+//        Gig rsnoGig1 = new Gig(rsnoBooking,
+//                                rsnoAct,
+//                                LocalDateTime.of(2021,12, 1, 9, 30, 0),
+//                                LocalDateTime.of(2021,12, 1, 10, 00, 0),
+//                                LocalDateTime.of(2021,12, 1, 13, 00, 0),
+//                                180, rsnoCentre, true, DressCode.CASUAL, false, false);
+//
+//        Gig rsnoGig2 = new Gig(rsnoBooking,
+//                rsnoAct,
+//                LocalDateTime.of(2021,12, 4, 10, 00, 0),
+//                LocalDateTime.of(2021,12, 4, 10, 30, 0),
+//                LocalDateTime.of(2021,12, 4, 16, 30, 0),
+//                240, grch, false, DressCode.WHITE_JACKET, true, false);
+//
+//        Gig rsnoGig3 = new Gig(rsnoBooking,
+//                rsnoAct,
+//                LocalDateTime.of(2021,12, 5, 10, 00, 0),
+//                LocalDateTime.of(2021,12, 5, 10, 30, 0),
+//                LocalDateTime.of(2021,12, 5, 16, 30, 0),
+//                240, usherHall, false, DressCode.WHITE_JACKET, true, false);
+//
+//        gigRepository.save(rsnoGig1);
+//        gigRepository.save(rsnoGig2);
+//        gigRepository.save(rsnoGig3);
 
     }
 

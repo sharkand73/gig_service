@@ -1,5 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
+import com.sharkey.music.gigservice.models.Booking;
 import com.sharkey.music.gigservice.models.Gig;
 import com.sharkey.music.gigservice.repositories.GigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,26 @@ public class GigController {
     public List<Gig> getAllGigs() {return gigRepository.findAll();}
 
     @GetMapping(value = "/gigs/{id}")
-    public ResponseEntity<Gig> getUser(@PathVariable Long id){
+    public ResponseEntity<Gig> getGig(@PathVariable Long id){
         return new ResponseEntity(gigRepository.findById(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/gigs")
-    public ResponseEntity<Gig> postUser(@RequestBody Gig gig){
+    public ResponseEntity<Gig> postGig(@RequestBody Gig gig){
         gigRepository.save(gig);
         return new ResponseEntity<>(gig, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping(value = "/gigs/batch")
+    public ResponseEntity<List<Gig>> postGigs(@RequestBody List<Gig> gigs) {
+        for (Gig gig : gigs) {
+            gigRepository.save(gig);
+        }
+        return new ResponseEntity<>(gigs, HttpStatus.ACCEPTED);
+    }
+
     @DeleteMapping(value = "/gigs/{id}")
-    public ResponseEntity<Long> deleteUser(@PathVariable Long id){
+    public ResponseEntity<Long> deleteGig(@PathVariable Long id){
         gigRepository.deleteById(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

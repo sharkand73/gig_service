@@ -1,6 +1,7 @@
 package com.sharkey.music.gigservice.controllers;
 
 import com.sharkey.music.gigservice.models.Act;
+import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.models.Gig;
 import com.sharkey.music.gigservice.models.Venue;
 import com.sharkey.music.gigservice.repositories.ActRepository;
@@ -25,6 +26,14 @@ public class VenueController {
         return new ResponseEntity(venueRepository.findById(id), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/venues/batch")
+    public ResponseEntity<List<Venue>> postVenues(@RequestBody List<Venue> venues){
+        for(Venue venue : venues) {
+            venueRepository.save(venue);
+        }
+        return new ResponseEntity<>(venues, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping(value = "/venues")
     public ResponseEntity<Venue> postVenue(@RequestBody Venue venue){
         venueRepository.save(venue);
@@ -42,7 +51,8 @@ public class VenueController {
         Venue foundVenue = venueRepository.findById(id).get();
         foundVenue.setName(venue.getName());
         foundVenue.setAddress(venue.getAddress());
-        foundVenue.setCoordinates(venue.getCoordinates());
+        foundVenue.setCoordinatesN(venue.getCoordinatesN());
+        foundVenue.setCoordinatesW(venue.getCoordinatesW());
         foundVenue.setVenueType(venue.getVenueType());
         venueRepository.save(foundVenue);
         return new ResponseEntity<>(foundVenue, HttpStatus.OK);

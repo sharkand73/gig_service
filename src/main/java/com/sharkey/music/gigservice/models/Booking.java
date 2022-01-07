@@ -1,34 +1,21 @@
 package com.sharkey.music.gigservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sharkey.music.gigservice.models.enums.BookingMethod;
 import com.sharkey.music.gigservice.models.enums.BookingStatus;
 import com.sharkey.music.gigservice.models.enums.PaymentMethod;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Entity
-@Table(name="booking")
-public class Booking {
+    @Table(name="booking")
+    public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnoreProperties("bookings")
-    @ManyToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private Person booker;
-
-    @Column
-    private LocalDate bookingDate;
-
-    @Column
-    private BookingMethod bookingMethod;
-    @Column
-    private String message;
     @Column
     private BookingStatus status;
     @Column
@@ -40,60 +27,33 @@ public class Booking {
     @Column
     private double fee;
     @Column
-    private PaymentMethod feePaymentMethod;
-    @Column
     private double expenses;
     @Column
     private LocalDate dateExpensesPaid;
-    @Column
-    private PaymentMethod expensesPaymentMethod;
 
-    @JsonIgnoreProperties("booking")
-    @OneToMany(mappedBy = "booking")
-    private List<Gig> gigs;
+    @JsonIgnoreProperties(value = {"bookings", "details", "organisation", "messages"})
+    @ManyToOne
+    @JoinColumn(name = "bookingGroup_id", referencedColumnName = "id")
+    private BookingGroup bookingGroup;
 
-    public Booking(Person booker, LocalDate bookingDate, BookingMethod bookingMethod, String message, double fee) {
-        this.booker = booker;
-        this.bookingDate = bookingDate;
-        this.bookingMethod = bookingMethod;
-        this.message = message;
+    @OneToOne
+    @JoinColumn(name = "gig_id", referencedColumnName = "id")
+    private Gig gig;
+
+    public Booking(double fee, BookingStatus status){
         this.fee = fee;
-        this.status = BookingStatus.CONFIRMED;
+        this.status = status;
     }
 
     public Booking() {
     }
 
-    public Person getBooker() {
-        return booker;
+    public Long getId() {
+        return id;
     }
 
-    public void setBooker(Person booker) {
-        this.booker = booker;
-    }
-
-    public LocalDate getBookingDate() {
-        return bookingDate;
-    }
-
-    public void setBookingDate(LocalDate bookingDate) {
-        this.bookingDate = bookingDate;
-    }
-
-    public BookingMethod getBookingMethod() {
-        return bookingMethod;
-    }
-
-    public void setBookingMethod(BookingMethod bookingMethod) {
-        this.bookingMethod = bookingMethod;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public BookingStatus getStatus() {
@@ -136,14 +96,6 @@ public class Booking {
         this.fee = fee;
     }
 
-    public PaymentMethod getFeePaymentMethod() {
-        return feePaymentMethod;
-    }
-
-    public void setFeePaymentMethod(PaymentMethod feePaymentMethod) {
-        this.feePaymentMethod = feePaymentMethod;
-    }
-
     public double getExpenses() {
         return expenses;
     }
@@ -160,27 +112,19 @@ public class Booking {
         this.dateExpensesPaid = dateExpensesPaid;
     }
 
-    public PaymentMethod getExpensesPaymentMethod() {
-        return expensesPaymentMethod;
+    public BookingGroup getBookingGroup() {
+        return bookingGroup;
     }
 
-    public void setExpensesPaymentMethod(PaymentMethod expensesPaymentMethod) {
-        this.expensesPaymentMethod = expensesPaymentMethod;
+    public void setBookingGroup(BookingGroup bookingGroup) {
+        this.bookingGroup = bookingGroup;
     }
 
-    public Long getId() {
-        return id;
+    public Gig getGig() {
+        return gig;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Gig> getGigs() {
-        return gigs;
-    }
-
-    public void setGigs(List<Gig> gigs) {
-        this.gigs = gigs;
+    public void setGig(Gig gig) {
+        this.gig = gig;
     }
 }

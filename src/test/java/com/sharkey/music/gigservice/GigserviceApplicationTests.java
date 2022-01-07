@@ -2,6 +2,7 @@ package com.sharkey.music.gigservice;
 
 import com.sharkey.music.gigservice.models.*;
 import com.sharkey.music.gigservice.models.enums.BookingMethod;
+import com.sharkey.music.gigservice.models.enums.BookingStatus;
 import com.sharkey.music.gigservice.models.enums.DressCode;
 import com.sharkey.music.gigservice.models.enums.VenueType;
 import org.junit.jupiter.api.Test;
@@ -21,64 +22,35 @@ class GigserviceApplicationTests {
 
 	@Test
 	void canCreateAddress(){
-	Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-	assertEquals("Strathbungo", euanAddress.getAddressLine2());
+	Address royAddress =  new Address("Lady Road", "","Edinburgh", "", "EH16 5PA","U.K.");
+	assertEquals("EH16 5PA", royAddress.getPostcode());
 	}
 
 	@Test
 	void canCreateDetails(){
-		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-		assertEquals("07985 001812", euanDetails.getMobile());
-		assertEquals("G41 2AG", euanDetails.getAddress().getPostcode());
+		Address royAddress =  new Address("Lady Road", "","Edinburgh", "", "EH16 5PA","U.K.");
+		Details royDetails = new Details(royAddress, "07884 184925", "", "roy.percy4@gmail.com", "");
+		assertEquals("07884 184925", royDetails.getMobile());
+		assertEquals("EH16 5PA", royDetails.getAddress().getPostcode());
 	}
 
 	@Test
 	void canCreatePerson(){
-		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		assertEquals("Stevenson", euan.getLastName());
-		assertEquals("07985 001812", euan.getDetails().getMobile());
-		assertEquals("G41 2AG", euan.getDetails().getAddress().getPostcode());
+		Address royAddress =  new Address("Lady Road", "","Edinburgh", "", "EH16 5PA","U.K.");
+		Details royDetails = new Details(royAddress, "07884 184925", "", "roy.percy4@gmail.com", "");
+		Person roy = new Person("Roy", "Percy", royDetails, null);
+		assertEquals("Percy", roy.getLastName());
+		assertEquals("07884 184925", roy.getDetails().getMobile());
+		assertEquals("EH16 5PA", roy.getDetails().getAddress().getPostcode());
 	}
 
 	@Test
 	void canGetPersonDetails(){
-		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		assertEquals("07985 001812", euan.findMobile());
-		assertEquals("G41 2AG", euan.findPostcode());
-	}
-
-	@Test
-	void canCreateBooking(){
-		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		String message = "Hi Andy, are you free for a gig on 25th December 1-5pm at Gelneagles, fee £280?";
-
-		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), BookingMethod.TEXT, message, 180);
-		assertEquals("Euan", fakeBooking.getBooker().getFirstName());
-		assertEquals(13, fakeBooking.getBookingDate().getDayOfMonth());
-		assertEquals(180.00, fakeBooking.getFee());
-		assertEquals("TEXT", fakeBooking.getBookingMethod().toString());
-	}
-
-	@Test
-	void paramsStartProperly(){
-		Address euanAddress =  new Address("36 Regent Park Square", "Strathbungo","Glasgow", "", "G41 2AG","U.K.");
-		Details euanDetails = new Details(euanAddress, "07985 001812", "", "euanstevenson@gmail.com", "");
-		Person euan = new Person("Euan", "Stevenson", euanDetails, null);
-		String message = "Hi Andy, are you free for a gig on 25th December 1-5pm at Gelneagles, fee £280?";
-
-		Booking fakeBooking = new Booking(euan, LocalDate.of(2021,11, 13), BookingMethod.TEXT, message, 180);
-
-		assertEquals("CONFIRMED", fakeBooking.getStatus().toString());
-		assertNull(fakeBooking.getDateConfirmed());
-		assertNull(fakeBooking.getDateCancelled());
-		assertEquals(0, fakeBooking.getExpenses());
+		Address royAddress =  new Address("Lady Road", "","Edinburgh", "", "EH16 5PA","U.K.");
+		Details royDetails = new Details(royAddress, "07884 184925", "", "roy.percy4@gmail.com", "");
+		Person roy = new Person("Roy", "Percy", royDetails, null);
+		assertEquals("07884 184925", roy.findMobile());
+		assertEquals("EH16 5PA", roy.findPostcode());
 	}
 
 	@Test
@@ -96,22 +68,26 @@ class GigserviceApplicationTests {
 	}
 
 	@Test
-	void canCreateGig(){
-		Address jonAddress = new Address("1 Fake Street", "Tullibody","Alloa", "", "FK1 1AA","U.K.");
-		Details jonDetails = new Details(jonAddress, "07777 123456", "", "jfleming@gmail.com", "");
-		Person jon = new Person("Jon", "Fleming", jonDetails, null);
-		String message = "Hi Andy, are you free for a gig on 12th November 7:30-10pm in Aberdeen, fee £150?";
-		Address venueAddress =  new Address("Guild Street", "","Aberdeen", "", "AB1 1AA","U.K.");
-		Venue tivoli = new Venue("Tivoli Theatre", venueAddress, VenueType.SMALL_THEATRE);
-		Booking elvisBooking = new Booking(jon, LocalDate.of(2021,07, 01), BookingMethod.MESSENGER, message, 150);
-		Act absoluteElvis = new Act("Absolute Elvis", true, DressCode.ALL_BLACK);
-		LocalDateTime arrive = LocalDateTime.of(2021,11,12,16,0,0);
-		LocalDateTime start = LocalDateTime.of(2021,11,12,19,30,0);
-		LocalDateTime end = LocalDateTime.of(2021,11,12,22,10,0);
-
-		Gig aberdeen = new Gig(elvisBooking, absoluteElvis, arrive, start, end, 120, tivoli, false, DressCode.ALL_BLACK, true, true);
-		assertEquals("Aberdeen", aberdeen.getVenue().getAddress().getCity());
+	void canCreateBookingGroup() {
+		Address rsnoAddress =  new Address("19 Killermont Street", "","Glasgow", "", "G2 3NX","U.K.");
+		Organisation rsno = new Organisation( "The R.S.N.O.", rsnoAddress);
+		Person emma = new Person("Emma", "Hunter", null, rsno);
+		BookingGroup octGigs = new BookingGroup(emma, LocalDate.of(2021, 9, 17));
+		assertEquals("The R.S.N.O.", octGigs.getBooker().getOrganisation().getName());
+		assertEquals(9, octGigs.getBookingDate().getMonthValue());
 	}
 
+	@Test
+	void canCreateBookings() {
+		Address rsnoAddress =  new Address("19 Killermont Street", "","Glasgow", "", "G2 3NX","U.K.");
+		Organisation rsno = new Organisation( "The R.S.N.O.", rsnoAddress);
+		Person emma = new Person("Emma", "Hunter", null, rsno);
+		BookingGroup octGigs = new BookingGroup(emma, LocalDate.of(2021, 9, 17));
 
+		Booking glaBooking = new Booking(100, BookingStatus.CLOSED);
+		glaBooking.setBookingGroup(octGigs);
+		Booking ediBooking = new Booking(100, BookingStatus.CLOSED);
+		ediBooking.setBookingGroup(octGigs);
+		assertEquals("Hunter", ediBooking.getBookingGroup().getBooker().getLastName());
+	}
 }

@@ -7,6 +7,7 @@ public enum DressCode {
     BLACK_SUIT_WHITE_SHIRT,
     BLACK_SUIT_BLACK_SHIRT,
     SUIT,
+    SUIT_NO_TIE,
     VINTAGE,
     CASUAL,
     FANCY_DRESS

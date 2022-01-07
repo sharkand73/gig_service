@@ -22,12 +22,12 @@ public class Person {
     @Column
     private String lastName;
 
-    @JsonIgnoreProperties("person")
+    @JsonIgnoreProperties(value = "person", allowSetters = true)
     @OneToOne
     @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
 
-    @JsonIgnoreProperties("persons")
+    @JsonIgnoreProperties(value = "persons", allowSetters = true)
     @ManyToOne
     @JoinColumn(name = "organisation_id", referencedColumnName = "id")
     private Organisation organisation;
@@ -46,9 +46,9 @@ public class Person {
     )
     private List<Instrument> instruments;
 
-    @JsonIgnoreProperties("booker")
+    @JsonIgnoreProperties(value = "booker", allowSetters = true)
     @OneToMany(mappedBy = "booker", fetch = FetchType.LAZY)
-    private List<Booking> bookings;
+    private List<BookingGroup> groupsBooked;
 
     public Person(String firstName, String lastName, Details details, Organisation organisation){
         this.firstName = firstName;
@@ -139,6 +139,14 @@ public class Person {
 
     public String findRegion(){
         return this.getDetails().getAddress().getRegion();
+    }
+
+    public List<BookingGroup> getGroupsBooked() {
+        return groupsBooked;
+    }
+
+    public void setGroupsBooked(List<BookingGroup> groupsBooked) {
+        this.groupsBooked = groupsBooked;
     }
 
     public String findPostcode(){

@@ -1,14 +1,11 @@
 package com.sharkey.music.gigservice.controllers;
 
-import com.sharkey.music.gigservice.models.Gig;
 import com.sharkey.music.gigservice.models.Person;
-import com.sharkey.music.gigservice.models.Venue;
 import com.sharkey.music.gigservice.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -17,7 +14,7 @@ public class PersonController {
     @Autowired
     PersonRepository personRepository;
 
-    @GetMapping(value = "/people")
+    @GetMapping(value = "/persons")
     public List<Person> getAllPersons(){
         return personRepository.findAll();
     }
@@ -31,6 +28,14 @@ public class PersonController {
     public ResponseEntity<Person> postUser(@RequestBody Person person){
         personRepository.save(person);
         return new ResponseEntity<>(person, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/persons/batch")
+    public ResponseEntity<List<Person>> postPersons(@RequestBody List<Person> persons){
+        for(Person person : persons) {
+            personRepository.save(person);
+        }
+        return new ResponseEntity<>(persons, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/persons/{id}")

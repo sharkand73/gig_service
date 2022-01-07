@@ -17,12 +17,12 @@ public class Organisation {
     @Column
     private String name;
 
-    @JsonIgnoreProperties("organisation")
+    @JsonIgnoreProperties(value = {"organisation", "details", "venue"}, allowSetters = true)
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @JsonIgnoreProperties("organisation")
+    @JsonIgnoreProperties(value = "organisation", allowSetters = true)
     @OneToMany(mappedBy = "organisation", fetch = FetchType.LAZY)
     private List<Person> persons;
 
