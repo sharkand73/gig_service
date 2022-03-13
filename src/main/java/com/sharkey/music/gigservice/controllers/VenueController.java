@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VenueController {
     @Autowired
     VenueRepository venueRepository;
@@ -52,7 +53,7 @@ public class VenueController {
         foundVenue.setName(venue.getName());
         foundVenue.setAddress(venue.getAddress());
         foundVenue.setCoordinatesN(venue.getCoordinatesN());
-        foundVenue.setCoordinatesW(venue.getCoordinatesW());
+        foundVenue.setCoordinatesE(venue.getCoordinatesE());
         foundVenue.setVenueType(venue.getVenueType());
         venueRepository.save(foundVenue);
         return new ResponseEntity<>(foundVenue, HttpStatus.OK);

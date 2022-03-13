@@ -26,7 +26,7 @@ public class Venue {
     private double coordinatesN;
 
     @Column
-    private double coordinatesW;
+    private double coordinatesE;
 
     @Column
     private VenueType venueType;
@@ -69,12 +69,12 @@ public class Venue {
         this.coordinatesN = coordinatesN;
     }
 
-    public double getCoordinatesW() {
-        return coordinatesW;
+    public double getCoordinatesE() {
+        return coordinatesE;
     }
 
-    public void setCoordinatesW(double coordinatesW) {
-        this.coordinatesW = coordinatesW;
+    public void setCoordinatesE(double coordinatesW) {
+        this.coordinatesE = coordinatesW;
     }
 
     public VenueType getVenueType() {
