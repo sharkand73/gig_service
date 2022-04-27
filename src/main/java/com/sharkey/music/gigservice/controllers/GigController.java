@@ -54,10 +54,10 @@ public class GigController {
         foundGig.setEndTime(gig.getEndTime());
         foundGig.setPlayingTime(gig.getPlayingTime());
         foundGig.setVenue(gig.getVenue());
-        foundGig.setIsRehearsal(gig.getIsRehearsal());
+        foundGig.setGigType(gig.getGigType());
         foundGig.setDressCode(gig.getDressCode());
-        foundGig.setSoundCheck(gig.getSoundCheck());
-        foundGig.setFoodProvided(gig.getFoodProvided());
+        foundGig.setSoundCheck(gig.isSoundCheck());
+        foundGig.setFoodProvided(gig.isFoodProvided());
         foundGig.setDistanceDriven(gig.getDistanceDriven());
         foundGig.setMoneySpent(gig.getMoneySpent());
         gigRepository.save(foundGig);

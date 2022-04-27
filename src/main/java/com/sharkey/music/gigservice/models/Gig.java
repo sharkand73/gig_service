@@ -2,6 +2,7 @@ package com.sharkey.music.gigservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sharkey.music.gigservice.models.enums.DressCode;
+import com.sharkey.music.gigservice.models.enums.GigType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ public class Gig {
     private Venue venue;
 
     @Column
-    private boolean isRehearsal;
+    private GigType gigType;
 
     @Column
     private DressCode dressCode;
@@ -57,7 +58,7 @@ public class Gig {
     @Column
     private double moneySpent;
 
-    public Gig(Booking booking, Act act, LocalDateTime arrivalTime, LocalDateTime startTime, LocalDateTime endTime, int playingTime, Venue venue, boolean isRehearsal, DressCode dressCode, boolean soundCheck, boolean foodProvided) {
+    public Gig(Booking booking, Act act, LocalDateTime arrivalTime, LocalDateTime startTime, LocalDateTime endTime, int playingTime, Venue venue, GigType gigType, DressCode dressCode, boolean soundCheck, boolean foodProvided) {
         this.booking = booking;
         this.act = act;
         this.arrivalTime = arrivalTime;
@@ -65,7 +66,7 @@ public class Gig {
         this.endTime = endTime;
         this.playingTime = playingTime;
         this.venue = venue;
-        this.isRehearsal = isRehearsal;
+        this.gigType = gigType;
         this.dressCode = dressCode;
         this.soundCheck = soundCheck;
         this.foodProvided = foodProvided;
@@ -140,12 +141,28 @@ public class Gig {
         this.venue = venue;
     }
 
-    public boolean getIsRehearsal() {
-        return isRehearsal;
+    public GigType getGigType() {
+        return gigType;
     }
 
-    public void setIsRehearsal(boolean rehearsal) {
-        isRehearsal = rehearsal;
+    public void setGigType(GigType gigType) {
+        this.gigType = gigType;
+    }
+
+    public boolean isSoundCheck() {
+        return soundCheck;
+    }
+
+    public boolean isFoodProvided() {
+        return foodProvided;
+    }
+
+    public void setSoundCheck(boolean soundCheck) {
+        this.soundCheck = soundCheck;
+    }
+
+    public void setFoodProvided(boolean foodProvided) {
+        this.foodProvided = foodProvided;
     }
 
     public DressCode getDressCode() {
@@ -154,22 +171,6 @@ public class Gig {
 
     public void setDressCode(DressCode dressCode) {
         this.dressCode = dressCode;
-    }
-
-    public boolean getSoundCheck() {
-        return soundCheck;
-    }
-
-    public void setSoundCheck(boolean soundCheck) {
-        this.soundCheck = soundCheck;
-    }
-
-    public boolean getFoodProvided() {
-        return foodProvided;
-    }
-
-    public void setFoodProvided(boolean foodProvided) {
-        this.foodProvided = foodProvided;
     }
 
     public int getDistanceDriven() {

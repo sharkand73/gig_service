@@ -5,6 +5,8 @@ public enum VenueType {
     MEDIUM_THEATRE,
     SMALL_THEATRE,
     CONCERT_HALL,
+    TOWN_HALL,
+    VILLAGE_HALL,
     PUB,
     JAZZ_CLUB,
     HOTEL,
@@ -12,6 +14,7 @@ public enum VenueType {
     HOTEL_RESTAURANT,
     REHEARSAL_SPACE,
     SUITE,
+    WEDDING_VENUE,
     OUTDOOR,
     OTHER
 }

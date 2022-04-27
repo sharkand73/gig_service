@@ -1,7 +1,6 @@
 package com.sharkey.music.gigservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sharkey.music.gigservice.models.enums.BookingMethod;
 import com.sharkey.music.gigservice.models.enums.PaymentMethod;
 
 import javax.persistence.*;
@@ -16,6 +15,9 @@ public class BookingGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private String bookingCode;
 
     @JsonIgnoreProperties(value = {"groupsBooked", "instruments", "address"})
     @ManyToOne
@@ -34,6 +36,9 @@ public class BookingGroup {
 
     @Column
     private PaymentMethod expensesPaymentMethod;
+
+    @Column
+    private boolean archived;
 
     @JsonIgnoreProperties(value = "bookingGroup", allowSetters = true)
     @OneToMany(mappedBy = "bookingGroup", fetch = FetchType.LAZY)
@@ -56,6 +61,14 @@ public class BookingGroup {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getBookingCode() {
+        return bookingCode;
+    }
+
+    public void setBookingCode(String bookingCode) {
+        this.bookingCode = bookingCode;
     }
 
     public Person getBooker() {
@@ -96,6 +109,14 @@ public class BookingGroup {
 
     public void setExpensesPaymentMethod(PaymentMethod expensesPaymentMethod) {
         this.expensesPaymentMethod = expensesPaymentMethod;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     public List<Booking> getBookings() {
