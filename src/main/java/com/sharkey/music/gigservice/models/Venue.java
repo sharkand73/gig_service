@@ -23,10 +23,10 @@ public class Venue {
     private Address address;
 
     @Column
-    private double coordinatesN;
+    private String coordinatesN;
 
     @Column
-    private double coordinatesE;
+    private String coordinatesE;
 
     @Column
     private VenueType venueType;
@@ -61,19 +61,19 @@ public class Venue {
         this.address = address;
     }
 
-    public double getCoordinatesN() {
+    public String getCoordinatesN() {
         return coordinatesN;
     }
 
-    public void setCoordinatesN(double coordinatesN) {
+    public void setCoordinatesN(String coordinatesN) {
         this.coordinatesN = coordinatesN;
     }
 
-    public double getCoordinatesE() {
+    public String getCoordinatesE() {
         return coordinatesE;
     }
 
-    public void setCoordinatesE(double coordinatesW) {
+    public void setCoordinatesE(String coordinatesW) {
         this.coordinatesE = coordinatesW;
     }
 
