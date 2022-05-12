@@ -23,7 +23,7 @@ public class Person {
     private String lastName;
 
     @JsonIgnoreProperties(value = "person", allowSetters = true)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "details_id", referencedColumnName = "id")
     private Details details;
 

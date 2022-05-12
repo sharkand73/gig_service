@@ -14,7 +14,7 @@ public class Details {
     private Long id;
 
     @JsonIgnoreProperties(value = {"details", "venue"}, allowSetters = true)
-    @OneToOne  // CascadeType.ALL causing issues.  Why?
+    @OneToOne(cascade = CascadeType.REMOVE) // CascadeType.ALL causing issues.  Why?
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 

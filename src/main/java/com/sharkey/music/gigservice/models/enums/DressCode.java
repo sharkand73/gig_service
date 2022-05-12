@@ -1,6 +1,7 @@
 package com.sharkey.music.gigservice.models.enums;
 
 public enum DressCode {
+    UNKNOWN,
     BLACK_TIE,
     WHITE_JACKET,
     ALL_BLACK,

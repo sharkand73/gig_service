@@ -36,8 +36,9 @@ import java.time.LocalDate;
     @JoinColumn(name = "bookingGroup_id", referencedColumnName = "id")
     private BookingGroup bookingGroup;
 
-    @OneToOne
-    @JoinColumn(name = "gig_id", referencedColumnName = "id")
+    @JsonIgnoreProperties(value = "booking")
+    @OneToOne(mappedBy = "booking", fetch = FetchType.LAZY)
+    //@JoinColumn(name = "gig_id", referencedColumnName = "id")
     private Gig gig;
 
     public Booking(double fee, BookingStatus status){

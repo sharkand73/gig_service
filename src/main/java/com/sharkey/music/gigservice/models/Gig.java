@@ -16,7 +16,7 @@ public class Gig {
     @Column
     private Long id;
 
-    @JsonIgnoreProperties(value = "gigs", allowSetters = true)
+    @JsonIgnoreProperties(value = "gig", allowSetters = true)
     @OneToOne
     @JoinColumn(name = "booking_id", referencedColumnName = "id")
     private Booking booking;
