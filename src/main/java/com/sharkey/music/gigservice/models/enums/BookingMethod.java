@@ -1,7 +1,7 @@
 package com.sharkey.music.gigservice.models.enums;
 
 public enum BookingMethod {
-    TEXT,
+    SMS,
     EMAIL,
     PHONE,
     MESSENGER,
