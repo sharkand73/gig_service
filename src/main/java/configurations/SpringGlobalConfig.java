@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // Adding this comment for new commit
+// And this
 
 @Configuration
 public class SpringGlobalConfig implements WebMvcConfigurer {
