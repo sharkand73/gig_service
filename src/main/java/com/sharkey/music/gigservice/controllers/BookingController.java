@@ -55,6 +55,7 @@ public class BookingController {
         foundBooking.setFee(booking.getFee());
         foundBooking.setExpenses(booking.getExpenses());
         foundBooking.setDateExpensesPaid(booking.getDateExpensesPaid());
+        foundBooking.setBookingGroup(booking.getBookingGroup());
         bookingRepository.save(foundBooking);
         return new ResponseEntity<>(foundBooking, HttpStatus.OK);
     }
