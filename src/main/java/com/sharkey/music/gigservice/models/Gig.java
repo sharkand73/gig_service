@@ -1,6 +1,7 @@
 package com.sharkey.music.gigservice.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sharkey.music.gigservice.models.enums.BassType;
 import com.sharkey.music.gigservice.models.enums.DressCode;
 import com.sharkey.music.gigservice.models.enums.GigType;
 
@@ -42,6 +43,9 @@ public class Gig {
 
     @Column
     private GigType gigType;
+
+    @Column
+    private BassType bass;
 
     @Column
     private DressCode dressCode;
@@ -147,6 +151,14 @@ public class Gig {
 
     public void setGigType(GigType gigType) {
         this.gigType = gigType;
+    }
+
+    public BassType getBass() {
+        return bass;
+    }
+
+    public void setBass(BassType bass) {
+        this.bass = bass;
     }
 
     public boolean isSoundCheck() {

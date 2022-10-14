@@ -55,6 +55,7 @@ public class GigController {
         foundGig.setPlayingTime(gig.getPlayingTime());
         foundGig.setVenue(gig.getVenue());
         foundGig.setGigType(gig.getGigType());
+        foundGig.setBass(gig.getBass());
         foundGig.setDressCode(gig.getDressCode());
         foundGig.setSoundCheck(gig.isSoundCheck());
         foundGig.setFoodProvided(gig.isFoodProvided());
