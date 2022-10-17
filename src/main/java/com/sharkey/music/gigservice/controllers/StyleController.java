@@ -1,5 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
+import com.sharkey.music.gigservice.models.Skill;
 import com.sharkey.music.gigservice.models.Style;
 import com.sharkey.music.gigservice.repositories.StyleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class StyleController {
     public ResponseEntity<Style> postStyle(@RequestBody Style style){
         styleRepository.save(style);
         return new ResponseEntity<>(style, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/styles/batch")
+    public ResponseEntity<List<Style>> postStyles(@RequestBody List<Style> styles){
+        for(Style style : styles) {
+            styleRepository.save(style);
+        }
+        return new ResponseEntity<>(styles, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/styles/{id}")

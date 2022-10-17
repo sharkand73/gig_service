@@ -1,5 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
+import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.models.Skill;
 import com.sharkey.music.gigservice.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,14 @@ public class SkillController {
     public ResponseEntity<Skill> postSkill(@RequestBody Skill skill){
         skillRepository.save(skill);
         return new ResponseEntity<>(skill, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/skills/batch")
+    public ResponseEntity<List<Skill>> postSkills(@RequestBody List<Skill> skills){
+        for(Skill skill : skills) {
+            skillRepository.save(skill);
+        }
+        return new ResponseEntity<>(skills, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/skills/{id}")
