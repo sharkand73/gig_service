@@ -1,7 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
 import com.sharkey.music.gigservice.models.Act;
-import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.repositories.ActRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,14 @@ public class ActController {
     ActRepository actRepository;
 
     @GetMapping(value = "/acts")
-    public List<Act> getAllActs() {return actRepository.findAll();}
+    public ResponseEntity<List<Act>> getAllActs() {
+        return new ResponseEntity<>(actRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/acts/count")
+    public ResponseEntity<Long> getActCount() {
+        return new ResponseEntity<Long>(actRepository.count(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/acts/{id}")
     public ResponseEntity<Act> getAct(@PathVariable Long id){
@@ -26,9 +32,7 @@ public class ActController {
 
     @PostMapping(value = "/acts/batch")
     public ResponseEntity<List<Act>> postActs(@RequestBody List<Act> acts){
-        for(Act act : acts) {
-            actRepository.save(act);
-        }
+        actRepository.saveAll(acts);
         return new ResponseEntity<>(acts, HttpStatus.ACCEPTED);
     }
 

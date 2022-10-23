@@ -1,6 +1,5 @@
 package com.sharkey.music.gigservice.controllers;
 
-import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.models.Message;
 import com.sharkey.music.gigservice.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,14 @@ public class MessageController {
     MessageRepository messageRepository;
 
     @GetMapping(value = "/messages")
-    public List<Message> getAllMessages() {return messageRepository.findAll();}
+    public ResponseEntity<List<Message>> getAllMessages() {
+        return new ResponseEntity<>(messageRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/messages/count")
+    public ResponseEntity<Long> getMessageCount() {
+        return new ResponseEntity<Long>(messageRepository.count(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/messages/{id}")
     public ResponseEntity<Message> getMessage(@PathVariable Long id){
@@ -32,9 +38,7 @@ public class MessageController {
 
     @PostMapping(value = "/messages/batch")
     public ResponseEntity<List<Message>> postMessages(@RequestBody List<Message> messages){
-        for(Message message : messages) {
-            messageRepository.save(message);
-        }
+        messageRepository.saveAll(messages);
         return new ResponseEntity<>(messages, HttpStatus.ACCEPTED);
     }
 
@@ -49,6 +53,8 @@ public class MessageController {
         Message foundMessage = messageRepository.findById(id).get();
         foundMessage.setDate(message.getDate());
         foundMessage.setBody(message.getBody());
+        foundMessage.setBookingGroup(message.getBookingGroup());
+        foundMessage.setBookingMethod(message.getBookingMethod());
         messageRepository.save(foundMessage);
         return new ResponseEntity<>(foundMessage, HttpStatus.OK);
     }

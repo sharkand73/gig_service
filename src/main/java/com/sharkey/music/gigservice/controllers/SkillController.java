@@ -17,7 +17,9 @@ public class SkillController {
     SkillRepository skillRepository;
 
     @GetMapping(value = "/skills")
-    public List<Skill> getAllSkills() {return skillRepository.findAll();}
+    public ResponseEntity<List<Skill>> getAllSkills() {
+        return new ResponseEntity<>(skillRepository.findAll(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/skills/{id}")
     public ResponseEntity<Skill> getSkill(@PathVariable Long id){

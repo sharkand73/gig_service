@@ -16,7 +16,9 @@ public class InstrumentController {
     InstrumentRepository instrumentRepository;
 
     @GetMapping(value = "/instruments")
-    public List<Instrument> getAllInstruments() {return instrumentRepository.findAll();}
+    public ResponseEntity<List<Instrument>> getAllInstruments() {
+        return new ResponseEntity<>(instrumentRepository.findAll(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/instruments/{id}")
     public ResponseEntity<Instrument> getInstrument(@PathVariable Long id){

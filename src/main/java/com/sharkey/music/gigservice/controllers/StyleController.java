@@ -17,7 +17,9 @@ public class StyleController {
     StyleRepository styleRepository;
 
     @GetMapping(value = "/styles")
-    public List<Style> getAllStyles() {return styleRepository.findAll();}
+    public ResponseEntity<List<Style>> getAllStyles() {
+        return new ResponseEntity<>(styleRepository.findAll(),HttpStatus.OK);
+    }
 
     @GetMapping(value = "/styles/{id}")
     public ResponseEntity<Style> getStyle(@PathVariable Long id){

@@ -2,6 +2,7 @@ package com.sharkey.music.gigservice.controllers;
 
 import com.sharkey.music.gigservice.models.Address;
 import com.sharkey.music.gigservice.models.Details;
+import com.sharkey.music.gigservice.repositories.AddressRepository;
 import com.sharkey.music.gigservice.repositories.DetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,18 @@ import java.util.List;
 public class DetailsController {
     @Autowired
     DetailsRepository detailsRepository;
+    @Autowired
+    AddressRepository addressRepository;
 
     @GetMapping(value = "/details")
-    public List<Details> getAllDetailss() {return detailsRepository.findAll();}
+    public ResponseEntity<List<Details>> getAllDetailss() {
+        return new ResponseEntity<>(detailsRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/details/count")
+    public ResponseEntity<Long> getDetailsCount() {
+        return new ResponseEntity<>(detailsRepository.count(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/details/{id}")
     public ResponseEntity<Details> getDetails(@PathVariable Long id){
@@ -32,26 +42,29 @@ public class DetailsController {
 
     @PostMapping(value = "/details/batch")
     public ResponseEntity<List<Details>> postDetails(@RequestBody List<Details> details){
-        for(Details detailsItem : details) {
-            detailsRepository.save(detailsItem);
-        }
+        detailsRepository.saveAll(details);
         return new ResponseEntity<>(details, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/details/{id}")
     public ResponseEntity<Long> deleteDetails(@PathVariable Long id){
-        detailsRepository.deleteById(id);
+        Details details = detailsRepository.findById(id).get();
+        Address address = details.getAddress();
+        detailsRepository.delete(details);
+        addressRepository.delete(address);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @PutMapping(value = "/details/{id}")
     public ResponseEntity<Details> putDetails(@RequestBody Details details, @PathVariable Long id){
         Details foundDetails = detailsRepository.findById(id).get();
-        foundDetails.setAddress(details.getAddress());
+        Address address = details.getAddress();
+        foundDetails.setAddress(address);
         foundDetails.setMobile(details.getMobile());
         foundDetails.setAltPhone(details.getAltPhone());
         foundDetails.setEmail(details.getEmail());
         foundDetails.setAltEmail(details.getAltEmail());
+        addressRepository.save(address);
         detailsRepository.save(foundDetails);
         return new ResponseEntity<>(foundDetails, HttpStatus.OK);
     }

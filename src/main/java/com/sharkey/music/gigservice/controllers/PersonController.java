@@ -1,6 +1,10 @@
 package com.sharkey.music.gigservice.controllers;
 
+import com.sharkey.music.gigservice.models.Address;
+import com.sharkey.music.gigservice.models.Details;
 import com.sharkey.music.gigservice.models.Person;
+import com.sharkey.music.gigservice.repositories.AddressRepository;
+import com.sharkey.music.gigservice.repositories.DetailsRepository;
 import com.sharkey.music.gigservice.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +18,19 @@ public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    DetailsRepository detailsRepository;
+    @Autowired
+    AddressRepository addressRepository;
 
     @GetMapping(value = "/persons")
-    public List<Person> getAllPersons(){
-        return personRepository.findAll();
+    public ResponseEntity<List<Person>> getAllPersons(){
+        return new ResponseEntity<>(personRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/persons/count")
+    public ResponseEntity<Long> getPersonsCount(){
+        return new ResponseEntity<Long>(personRepository.count(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/persons/{id}")
@@ -27,21 +40,28 @@ public class PersonController {
 
     @PostMapping(value = "/persons")
     public ResponseEntity<Person> postUser(@RequestBody Person person){
+        Details details = person.getDetails();
+        Address address = details.getAddress();
+        addressRepository.save(address);
+        detailsRepository.save(details);
         personRepository.save(person);
         return new ResponseEntity<>(person, HttpStatus.ACCEPTED);
     }
 
     @PostMapping(value = "/persons/batch")
     public ResponseEntity<List<Person>> postPersons(@RequestBody List<Person> persons){
-        for(Person person : persons) {
-            personRepository.save(person);
-        }
+        personRepository.saveAll(persons);
         return new ResponseEntity<>(persons, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/persons/{id}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long id){
-        personRepository.deleteById(id);
+        Person person = personRepository.findById(id).get();
+        Details details = person.getDetails();
+        Address address = details.getAddress();
+        personRepository.delete(person);
+        detailsRepository.delete(details);
+        addressRepository.delete(address);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
@@ -50,9 +70,13 @@ public class PersonController {
         Person foundPerson = personRepository.findById(id).get();
         foundPerson.setFirstName(person.getFirstName());
         foundPerson.setLastName(person.getLastName());
-        foundPerson.setDetails(person.getDetails());
+        Details details = person.getDetails();
+        Address address = details.getAddress();
+        foundPerson.setDetails(details);
         foundPerson.setOrganisation(person.getOrganisation());
         foundPerson.setInstruments(person.getInstruments());
+        addressRepository.save(address);
+        detailsRepository.save(details);
         personRepository.save(foundPerson);
         return new ResponseEntity<>(foundPerson, HttpStatus.OK);
     }
