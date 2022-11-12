@@ -24,23 +24,33 @@ public class GigController {
         return new ResponseEntity(gigRepository.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/gigs/count")
+    public ResponseEntity<Long> getGroupCount() {
+        return new ResponseEntity<>(gigRepository.count(), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/gigs")
     public ResponseEntity<Gig> postGig(@RequestBody Gig gig){
         gigRepository.save(gig);
         return new ResponseEntity<>(gig, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping(value = "/gigs/full")
+    public ResponseEntity<Gig> postGigFull(@RequestBody Gig gig){
+        //TODO:  Fill in methods
+        gigRepository.save(gig);
+        return new ResponseEntity<>(gig, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping(value = "/gigs/batch")
     public ResponseEntity<List<Gig>> postGigs(@RequestBody List<Gig> gigs) {
-        for (Gig gig : gigs) {
-            gigRepository.save(gig);
-        }
+        gigRepository.saveAll(gigs);
         return new ResponseEntity<>(gigs, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/gigs/{id}")
     public ResponseEntity<Long> deleteGig(@PathVariable Long id){
-        gigRepository.deleteById(id);
+        gigRepository.deleteById(id);  // delete booking
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 

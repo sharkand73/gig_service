@@ -37,8 +37,15 @@ public class OrganisationController {
 
     @PostMapping(value = "/organisations")
     public ResponseEntity<Organisation> postOrganisation(@RequestBody Organisation organisation){
+        organisationRepository.save(organisation);
+        return new ResponseEntity<>(organisation, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/organisations/full")
+    public ResponseEntity<Organisation> postOrganisationFull(@RequestBody Organisation organisation){
         Address address = organisation.getAddress();
         addressRepository.save(address);
+        organisation.setAddress(address);
         organisationRepository.save(organisation);
         return new ResponseEntity<>(organisation, HttpStatus.ACCEPTED);
     }

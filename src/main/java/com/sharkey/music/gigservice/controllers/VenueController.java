@@ -43,6 +43,12 @@ public class VenueController {
 
     @PostMapping(value = "/venues")
     public ResponseEntity<Venue> postVenue(@RequestBody Venue venue){
+        venueRepository.save(venue);
+        return new ResponseEntity<>(venue, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/venues/full")
+    public ResponseEntity<Venue> postVenueFull(@RequestBody Venue venue){
         Address address = venue.getAddress();
         addressRepository.save(address);
         venue.setAddress(address);
@@ -53,6 +59,9 @@ public class VenueController {
     @DeleteMapping(value = "/venues/{id}")
     public ResponseEntity<String> deleteVenue(@PathVariable Long id){
         Venue venue = venueRepository.findById(id).get();
+        if (venue.getGigs().size() > 0){
+            return new ResponseEntity<>("Cannot delete venue because it has gigs", HttpStatus.LOCKED);
+        }
         Address address = venue.getAddress();
         venueRepository.delete(venue);
         addressRepository.delete(address);

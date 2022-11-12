@@ -43,9 +43,13 @@ public class ActController {
     }
 
     @DeleteMapping(value = "/acts/{id}")
-    public ResponseEntity<Long> deleteAct(@PathVariable Long id){
-        actRepository.deleteById(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+    public ResponseEntity<String> deleteAct(@PathVariable Long id){
+        Act act = actRepository.findById(id).get();
+        if (act.getGigs().size() > 0){
+            return new ResponseEntity<>("Cannot delete act because it has gigs", HttpStatus.LOCKED);
+        }
+        actRepository.delete(act);
+        return new ResponseEntity<>(id.toString(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/acts/{id}")

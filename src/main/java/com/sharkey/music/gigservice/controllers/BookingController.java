@@ -1,8 +1,6 @@
 package com.sharkey.music.gigservice.controllers;
 
 import com.sharkey.music.gigservice.models.Booking;
-import com.sharkey.music.gigservice.models.BookingGroup;
-import com.sharkey.music.gigservice.models.Person;
 import com.sharkey.music.gigservice.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +22,11 @@ public class BookingController {
     @GetMapping(value = "/bookings/{id}")
     public ResponseEntity<Booking> getBooking(@PathVariable Long id){
         return new ResponseEntity(bookingRepository.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/bookings/count")
+    public ResponseEntity<Long> getGroupCount() {
+        return new ResponseEntity<>(bookingRepository.count(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/bookings")

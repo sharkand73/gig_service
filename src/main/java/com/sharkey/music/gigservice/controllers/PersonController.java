@@ -40,10 +40,18 @@ public class PersonController {
 
     @PostMapping(value = "/persons")
     public ResponseEntity<Person> postUser(@RequestBody Person person){
+        personRepository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping(value = "/persons/full")
+    public ResponseEntity<Person> postUserFull(@RequestBody Person person){
         Details details = person.getDetails();
         Address address = details.getAddress();
         addressRepository.save(address);
+        details.setAddress(address);
         detailsRepository.save(details);
+        person.setDetails(details);
         personRepository.save(person);
         return new ResponseEntity<>(person, HttpStatus.ACCEPTED);
     }
@@ -55,14 +63,18 @@ public class PersonController {
     }
 
     @DeleteMapping(value = "/persons/{id}")
-    public ResponseEntity<Long> deleteUser(@PathVariable Long id){
+    public ResponseEntity<String> deleteUser(@PathVariable Long id){
         Person person = personRepository.findById(id).get();
+        if (person.getGroupsBooked().size() > 0){
+            return new ResponseEntity<>("Unable to delete person because they have bookings", HttpStatus.LOCKED);
+        }
         Details details = person.getDetails();
         Address address = details.getAddress();
         personRepository.delete(person);
         detailsRepository.delete(details);
         addressRepository.delete(address);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        String message = String.format("Person with id %d deleted\nDetails with id %d deleted\nAddress with id %d deleted", id, details.getId(), address.getId());
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PutMapping(value = "/persons/{id}")

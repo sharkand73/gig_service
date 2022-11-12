@@ -1,10 +1,8 @@
 package com.sharkey.music.gigservice.controllers;
 
-import com.sharkey.music.gigservice.models.Address;
-import com.sharkey.music.gigservice.models.Booking;
 import com.sharkey.music.gigservice.models.BookingGroup;
+import com.sharkey.music.gigservice.models.Message;
 import com.sharkey.music.gigservice.repositories.BookingGroupRepository;
-import com.sharkey.music.gigservice.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,21 @@ public class BookingGroupController {
     BookingGroupRepository bookingGroupRepository;
 
     @GetMapping(value = "/groups")
-    public List<BookingGroup> getAllGroups() {return bookingGroupRepository.findAll();}
+    public ResponseEntity<List<BookingGroup>> getAllGroups() {
+        return new ResponseEntity<>(bookingGroupRepository.findAll(), HttpStatus.OK);
+    }
 
+    @GetMapping(value = "/groups/count")
+    public ResponseEntity<Long> getGroupCount() {
+        return new ResponseEntity<>(bookingGroupRepository.count(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/groups/active/count")
+    public ResponseEntity<Long> getActiveGroupCount() {
+        Long totalGroups = bookingGroupRepository.count();
+        Long archivedGroups = (long) bookingGroupRepository.findBookingGroupByArchived(true).size();
+        return new ResponseEntity<>(totalGroups - archivedGroups, HttpStatus.OK);
+    }
 
     @GetMapping(value = "/groups/{id}")
     public ResponseEntity<BookingGroup> getGroup(@PathVariable Long id){
@@ -35,16 +46,18 @@ public class BookingGroupController {
 
     @PostMapping(value = "/groups/batch")
     public ResponseEntity<List<BookingGroup>> postGroups(@RequestBody List<BookingGroup> groups){
-        for(BookingGroup group : groups) {
-            bookingGroupRepository.save(group);
-        }
+        bookingGroupRepository.saveAll(groups);
         return new ResponseEntity<>(groups, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/groups/{id}")
-    public ResponseEntity<Long> deleteGroup(@PathVariable Long id){
-        bookingGroupRepository.deleteById(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+    public ResponseEntity<String> deleteGroup(@PathVariable Long id){
+        BookingGroup group = bookingGroupRepository.findById(id).get();
+        if (group.getBookings().size() > 0){
+            return new ResponseEntity<>("Cannot delete booking group because it has bookings", HttpStatus.LOCKED);
+        }
+        bookingGroupRepository.delete(group);
+        return new ResponseEntity<>(id.toString(), HttpStatus.OK);
     }
 
     @PutMapping(value = "/groups/{id}")
@@ -54,6 +67,7 @@ public class BookingGroupController {
         foundBookingGroup.setBookingDate(bookingGroup.getBookingDate());
         foundBookingGroup.setFeePaymentMethod(bookingGroup.getFeePaymentMethod());
         foundBookingGroup.setExpensesPaymentMethod(bookingGroup.getExpensesPaymentMethod());
+        foundBookingGroup.setArchived(bookingGroup.isArchived());
         bookingGroupRepository.save(foundBookingGroup);
         return new ResponseEntity<>(foundBookingGroup, HttpStatus.OK);
     }

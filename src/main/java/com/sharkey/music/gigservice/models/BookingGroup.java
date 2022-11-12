@@ -19,7 +19,7 @@ public class BookingGroup {
     @Column
     private String bookingCode;
 
-    @JsonIgnoreProperties(value = {"groupsBooked", "instruments", "address"})
+    @JsonIgnoreProperties(value = {"groupsBooked", "instruments", "address"}, allowSetters = true)
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person booker;
