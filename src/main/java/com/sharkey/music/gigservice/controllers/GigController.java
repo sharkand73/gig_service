@@ -17,7 +17,9 @@ public class GigController {
     GigRepository gigRepository;
 
     @GetMapping(value = "/gigs")
-    public List<Gig> getAllGigs() {return gigRepository.findAll();}
+    public ResponseEntity<List<Gig>> getAllGigs() {
+        return new ResponseEntity<>(gigRepository.findAll(), HttpStatus.OK);
+    }
 
     @GetMapping(value = "/gigs/{id}")
     public ResponseEntity<Gig> getGig(@PathVariable Long id){
@@ -29,11 +31,11 @@ public class GigController {
         return new ResponseEntity<>(gigRepository.count(), HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/gigs/count/{year}")
-//    public ResponseEntity<Long> getGigCountByYear(@PathVariable int year) {
-//        Long count = gigRepository.findByStartTimeYear(year).stream().count();
-//        return new ResponseEntity<Long>(count, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/gigs/count/{year}")
+    public ResponseEntity<List<Gig>> findByYear(@PathVariable int year) {
+        List<Gig> gigs = gigRepository.findByYear(year);
+        return new ResponseEntity<List<Gig>>(gigs, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/gigs")
     public ResponseEntity<Gig> postGig(@RequestBody Gig gig){
