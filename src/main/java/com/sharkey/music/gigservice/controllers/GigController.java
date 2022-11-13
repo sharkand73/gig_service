@@ -29,11 +29,11 @@ public class GigController {
         return new ResponseEntity<>(gigRepository.count(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/gigs/count/{year}")
-    public ResponseEntity<Long> getGigCountByYear(@PathVariable int year) {
-        Long count = gigRepository.findByStartTimeYear(year).stream().count();
-        return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/gigs/count/{year}")
+//    public ResponseEntity<Long> getGigCountByYear(@PathVariable int year) {
+//        Long count = gigRepository.findByStartTimeYear(year).stream().count();
+//        return new ResponseEntity<Long>(count, HttpStatus.OK);
+//    }
 
     @PostMapping(value = "/gigs")
     public ResponseEntity<Gig> postGig(@RequestBody Gig gig){
