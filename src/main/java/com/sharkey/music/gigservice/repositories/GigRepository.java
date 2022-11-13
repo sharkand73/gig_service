@@ -11,6 +11,6 @@ public interface GigRepository extends JpaRepository<Gig, Long> {
     @Query("from Gig where YEAR(startTime)=?1")
     List<Gig> findByYear(int year);
 
-    @Query("select count (*) from Gig where YEAR(startTime)=?1")
+    @Query("select count (*) from Gig where YEAR(startTime)=?1 AND gigType<>'REHEARSAL'")
     Long countByYear(int year);
 }
