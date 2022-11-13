@@ -31,10 +31,10 @@ public class GigController {
         return new ResponseEntity<>(gigRepository.count(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/gigs/count/{year}")
+    @GetMapping(value = "/gigs/list/{year}")
     public ResponseEntity<List<Gig>> findByYear(@PathVariable int year) {
         List<Gig> gigs = gigRepository.findByYear(year);
-        return new ResponseEntity<List<Gig>>(gigs, HttpStatus.OK);
+        return new ResponseEntity<>(gigs, HttpStatus.OK);
     }
 
     @PostMapping(value = "/gigs")
