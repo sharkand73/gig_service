@@ -42,6 +42,11 @@ public class GigController {
         return new ResponseEntity<>(gigRepository.countByYear(year), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/gigs/countrehearsals/{year}")
+    public ResponseEntity<Long> getRehearsalCountByYear(@PathVariable int year) {
+        return new ResponseEntity<>(gigRepository.countRehearsalsByYear(year), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/gigs")
     public ResponseEntity<Gig> postGig(@RequestBody Gig gig){
         gigRepository.save(gig);
