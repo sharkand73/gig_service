@@ -13,6 +13,7 @@ public enum VenueType {
     RESTAURANT,
     HOTEL_RESTAURANT,
     REHEARSAL_SPACE,
+    RECORDING_STUDIO,
     SUITE,
     WEDDING_VENUE,
     OUTDOOR,

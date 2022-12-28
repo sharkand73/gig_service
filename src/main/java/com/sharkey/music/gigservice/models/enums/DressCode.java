@@ -11,5 +11,6 @@ public enum DressCode {
     SUIT_NO_TIE,
     VINTAGE,
     CASUAL,
-    FANCY_DRESS
+    FANCY_DRESS,
+    SMART_CASUAL
 }
